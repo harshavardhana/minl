@@ -1,0 +1,25 @@
+{
+	"comment": "",
+	"ignore": "test",
+	"package": [
+		{
+			"checksumSHA1": "L7vCR+T24+agfG7QQ2848/vMUOE=",
+			"path": "github.com/hashicorp/go-version",
+			"revision": "deeb027c13a95d56c7585df3fe29207208c6706e",
+			"revisionTime": "2016-07-25T21:20:58Z"
+		},
+		{
+			"checksumSHA1": "30li+eUAhoAhUS0a8CBplFNg8Ks=",
+			"path": "github.com/minio/cli",
+			"revision": "c4a07c7b68db77ccd119183fb1d01dd5972434ab",
+			"revisionTime": "2015-11-19T04:00:48Z"
+		},
+		{
+			"checksumSHA1": "vof6h7IiLsIUtakYY4/rKhor48Q=",
+			"path": "gopkg.in/cheggaaa/pb.v1",
+			"revision": "9453b2db37f4d8bc63751daca63bbe7049eb5e74",
+			"revisionTime": "2016-07-14T16:52:18Z"
+		}
+	],
+	"rootPath": "github.com/minio/minl"
+}
