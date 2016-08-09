@@ -15,6 +15,12 @@
 			"revisionTime": "2015-11-19T04:00:48Z"
 		},
 		{
+			"checksumSHA1": "7IW7Ag553/qp3PhgucVBo7FyLlY=",
+			"path": "github.com/minio/minio-go",
+			"revision": "754fe8e1268a24a3084629eb9d045a1971dca368",
+			"revisionTime": "2016-08-09T23:58:33Z"
+		},
+		{
 			"checksumSHA1": "vof6h7IiLsIUtakYY4/rKhor48Q=",
 			"path": "gopkg.in/cheggaaa/pb.v1",
 			"revision": "9453b2db37f4d8bc63751daca63bbe7049eb5e74",
