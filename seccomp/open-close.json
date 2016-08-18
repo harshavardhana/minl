@@ -1,0 +1,32 @@
+{
+    "defaultAction": 2,
+    "architectures": [
+        "amd64",
+        "x86",
+        "x32"
+    ],
+    "syscalls": [
+        {
+            "name": "clone",
+            "action": 4,
+            "args": [
+                {
+                    "index": 0,
+                    "value": 2080505856,
+                    "valueTwo": 0,
+                    "op": 7
+                }
+            ]
+        },
+        {
+            "name": "open",
+            "action": 4,
+            "args": []
+        },
+        {
+            "name": "close",
+            "action": 4,
+            "args": []
+        }
+    ]
+}
