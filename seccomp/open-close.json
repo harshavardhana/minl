@@ -1,32 +1,32 @@
 {
-    "defaultAction": 2,
-    "architectures": [
-        "amd64",
-        "x86",
-        "x32"
-    ],
-    "syscalls": [
+  "syscalls": [
+    {
+      "args": [
         {
-            "name": "clone",
-            "action": 4,
-            "args": [
-                {
-                    "index": 0,
-                    "value": 2080505856,
-                    "valueTwo": 0,
-                    "op": 7
-                }
-            ]
-        },
-        {
-            "name": "open",
-            "action": 4,
-            "args": []
-        },
-        {
-            "name": "close",
-            "action": 4,
-            "args": []
+          "op": 7,
+          "valueTwo": 0,
+          "value": 2080505856,
+          "index": 0
         }
-    ]
+      ],
+      "action": 4,
+      "name": "clone"
+    },
+    {
+      "args": [],
+      "action": 4,
+      "name": "open"
+    },
+    {
+      "args": [],
+      "action": 4,
+      "name": "close"
+    }
+  ],
+  "architectures": [
+    "amd64",
+    "x86",
+    "x32"
+  ],
+  "defaultAction": 2
 }

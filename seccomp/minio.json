@@ -1,0 +1,252 @@
+{
+  "defaultAction": 2,
+  "architectures": [
+    "amd64"
+  ],
+  "syscalls": [
+    {
+      "name": "setgroups",
+      "action": 4
+    },
+    {
+      "name": "ioctl",
+      "action": 4
+    },
+    {
+      "name": "fchmodat",
+      "action": 4
+    },
+    {
+      "name": "connect",
+      "action": 4
+    },
+    {
+      "name": "getcwd",
+      "action": 4
+    },
+    {
+      "name": "getdents64",
+      "action": 4
+    },
+    {
+      "name": "capset",
+      "action": 4
+    },
+    {
+      "name": "rt_sigprocmask",
+      "action": 4
+    },
+    {
+      "name": "stat",
+      "action": 4
+    },
+    {
+      "name": "execve",
+      "action": 4
+    },
+    {
+      "name": "epoll_wait",
+      "action": 4
+    },
+    {
+      "name": "openat",
+      "action": 4
+    },
+    {
+      "name": "pipe",
+      "action": 4
+    },
+    {
+      "name": "sched_yield",
+      "action": 4
+    },
+    {
+      "name": "prctl",
+      "action": 4
+    },
+    {
+      "name": "mprotect",
+      "action": 4
+    },
+    {
+      "name": "sigaltstack",
+      "action": 4
+    },
+    {
+      "name": "set_tid_address",
+      "action": 4
+    },
+    {
+      "name": "getuid",
+      "action": 4
+    },
+    {
+      "name": "write",
+      "action": 4
+    },
+    {
+      "name": "rt_sigaction",
+      "action": 4
+    },
+    {
+      "name": "setsockopt",
+      "action": 4
+    },
+    {
+      "name": "getsockname",
+      "action": 4
+    },
+    {
+      "name": "wait4",
+      "action": 4
+    },
+    {
+      "name": "getppid",
+      "action": 4
+    },
+    {
+      "name": "gettid",
+      "action": 4
+    },
+    {
+      "name": "access",
+      "action": 4
+    },
+    {
+      "name": "fstat",
+      "action": 4
+    },
+    {
+      "name": "socket",
+      "action": 4
+    },
+    {
+      "name": "bind",
+      "action": 4
+    },
+    {
+      "name": "mmap",
+      "action": 4
+    },
+    {
+      "name": "open",
+      "action": 4
+    },
+    {
+      "name": "epoll_ctl",
+      "action": 4
+    },
+    {
+      "name": "getrandom",
+      "action": 4
+    },
+    {
+      "name": "fchown",
+      "action": 4
+    },
+    {
+      "name": "sched_getaffinity",
+      "action": 4
+    },
+    {
+      "name": "renameat",
+      "action": 4
+    },
+    {
+      "name": "fcntl",
+      "action": 4
+    },
+    {
+      "name": "set_robust_list",
+      "action": 4
+    },
+    {
+      "name": "epoll_create1",
+      "action": 4
+    },
+    {
+      "name": "setuid",
+      "action": 4
+    },
+    {
+      "name": "read",
+      "action": 4
+    },
+    {
+      "name": "futex",
+      "action": 4
+    },
+    {
+      "name": "select",
+      "action": 4
+    },
+    {
+      "name": "getpid",
+      "action": 4
+    },
+    {
+      "name": "brk",
+      "action": 4
+    },
+    {
+      "name": "openat",
+      "action": 4
+    },
+    {
+      "name": "chdir",
+      "action": 4
+    },
+    {
+      "name": "arch_prctl",
+      "action": 4
+    },
+    {
+      "name": "capget",
+      "action": 4
+    },
+    {
+      "name": "getgid",
+      "action": 4
+    },
+    {
+      "name": "geteuid",
+      "action": 4
+    },
+    {
+      "name": "getppid",
+      "action": 4
+    },
+    {
+      "name": "setgid",
+      "action": 4
+    },
+    {
+      "name": "close",
+      "action": 4
+    },
+    {
+      "name": "clone",
+      "action": 4
+    },
+    {
+      "name": "getrlimit",
+      "action": 4
+    },
+    {
+      "name": "munmap",
+      "action": 4
+    },
+    {
+      "name": "mkdirat",
+      "action": 4
+    },
+    {
+      "name": "getpid",
+      "action": 4
+    },
+    {
+      "name": "getpeername",
+      "action": 4
+    }
+  ]
+}

@@ -33,13 +33,8 @@ func main() {
 	scomp := &seccomp.Seccomp{}
 	d.Decode(scomp)
 	if err = prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0); err != nil {
-		fmt.Println("Unable to set privileges", err)
+		//		fmt.Println("Unable to set privileges", err)
 		return
 	}
-	err = seccomp.InitSeccomp(scomp)
-	if err != nil {
-		fmt.Println("Unable to initialize seccomp", err)
-		return
-	}
-	os.Open("testfile")
+	seccomp.InitSeccomp(scomp)
 }
