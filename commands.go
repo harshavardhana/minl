@@ -15,13 +15,7 @@ var commands = []cli.Command{}
 var commandsTree = newTrie()
 
 // Collection of minl flags currently supported
-var globalFlags = []cli.Flag{
-	// global flags for minl.
-	cli.BoolFlag{
-		Name:  "help, h",
-		Usage: "Show help.",
-	},
-}
+var globalFlags = []cli.Flag{}
 
 // registerCmd registers a cli command
 func registerCmd(cmd cli.Command) {

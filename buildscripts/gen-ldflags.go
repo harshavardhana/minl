@@ -1,7 +1,7 @@
 // +build ignore
 
 /*
- * Minio Lambda (C) 2016 Minio, Inc.
+ * MinIO Cloud Storage, (C) 2015 MinIO, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,18 +27,20 @@ import (
 )
 
 func genLDFlags(version string) string {
-	var ldflagsStr string
-	ldflagsStr = "-X main.minLVersion=" + version + " "
-	ldflagsStr = ldflagsStr + "-X main.minLReleaseTag=" + releaseTag(version) + " "
-	ldflagsStr = ldflagsStr + "-X main.minLCommitID=" + commitID() + " "
-	ldflagsStr = ldflagsStr + "-X main.minLShortCommitID=" + commitID()[:12]
+	ldflagsStr := "-s -w"
+	ldflagsStr += " -X github.com/minio/minio/cmd.Version=" + version
+	ldflagsStr += " -X github.com/minio/minio/cmd.ReleaseTag=" + releaseTag(version)
+	ldflagsStr += " -X github.com/minio/minio/cmd.CommitID=" + commitID()
+	ldflagsStr += " -X github.com/minio/minio/cmd.ShortCommitID=" + commitID()[:12]
+	ldflagsStr += " -X github.com/minio/minio/cmd.GOPATH=" + os.Getenv("GOPATH")
+	ldflagsStr += " -X github.com/minio/minio/cmd.GOROOT=" + os.Getenv("GOROOT")
 	return ldflagsStr
 }
 
 // genReleaseTag prints release tag to the console for easy git tagging.
 func releaseTag(version string) string {
 	relPrefix := "DEVELOPMENT"
-	if prefix := os.Getenv("MINL_RELEASE"); prefix != "" {
+	if prefix := os.Getenv("MINIO_RELEASE"); prefix != "" {
 		relPrefix = prefix
 	}
 

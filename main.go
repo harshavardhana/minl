@@ -34,10 +34,17 @@ func registerApp() *cli.App {
 	// Register all the commands (refer commands.go)
 	registerCmd(genCmd)
 	registerCmd(versionCmd)
-
+	
+	// Set up app.
+        cli.HelpFlag = cli.BoolFlag{
+                Name:  "help, h",
+                Usage: "show help",
+        }
+	
 	app := cli.NewApp()
-	app.Usage = "Minio Lambda."
-	app.Author = "Minio.io"
+	app.Usage = "MinIO Lambda Functions"
+	app.Author = "MinIO, Inc"
+	app.HideHelpCommand = true // Hide `help, h` command, we already have `minl --help`.
 	app.Flags = globalFlags
 	app.Commands = commands
 	app.CustomAppHelpTemplate = minLHelpTemplate

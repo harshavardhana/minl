@@ -65,7 +65,7 @@ package main
 
 import (
         "fmt"
-        "github.com/minio/minio-go"
+        "github.com/minio/minio-go/v6"
 )
 
 func enableBucketNotification(s3Client *minio.Client, lambdaArn minio.Arn) error {
@@ -189,7 +189,7 @@ func parseEvents(events []string) (parsedEvents []string) {
 // checkGenSyntax - validate all the passed arguments
 func checkGenSyntax(ctx *cli.Context) {
 	if !ctx.Args().Present() {
-		cli.ShowCommandHelp(ctx, ctx.Args().First())
+		cli.ShowCommandHelpAndExit(ctx, ctx.Args().First(), 1)
 	}
 }
 

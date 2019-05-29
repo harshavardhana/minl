@@ -1,92 +1,64 @@
+PWD := $(shell pwd)
+GOPATH := $(shell go env GOPATH)
 LDFLAGS := $(shell go run buildscripts/gen-ldflags.go)
 
-all: install
+TAG ?= $(USER)
+BUILD_LDFLAGS := '$(LDFLAGS)'
+
+all: build
 
 checks:
-	@echo "Checking deps:"
-	@(env bash buildscripts/checkdeps.sh)
-	@(env bash buildscripts/checkgopath.sh)
+	@echo "Checking dependencies"
+	@(env bash $(PWD)/buildscripts/checkdeps.sh)
 
-getdeps: checks
-	@go get github.com/golang/lint/golint && echo "Installed golint:"
-	@go get github.com/fzipp/gocyclo && echo "Installed gocyclo:"
-	@go get github.com/remyoudompheng/go-misc/deadcode && echo "Installed deadcode:"
-	@go get github.com/client9/misspell/cmd/misspell && echo "Installed misspell:"
+getdeps:
+	@mkdir -p ${GOPATH}/bin
+	@which golint 1>/dev/null || (echo "Installing golint" && go get -u golang.org/x/lint/golint)
+	@which staticcheck 1>/dev/null || (echo "Installing staticcheck" && wget --quiet -O ${GOPATH}/bin/staticcheck https://github.com/dominikh/go-tools/releases/download/2019.1/staticcheck_linux_amd64 && chmod +x ${GOPATH}/bin/staticcheck)
+	@which misspell 1>/dev/null || (echo "Installing misspell" && wget --quiet https://github.com/client9/misspell/releases/download/v0.3.4/misspell_0.3.4_linux_64bit.tar.gz && tar xf misspell_0.3.4_linux_64bit.tar.gz && mv misspell ${GOPATH}/bin/misspell && chmod +x ${GOPATH}/bin/misspell && rm -f misspell_0.3.4_linux_64bit.tar.gz)
 
-# verifiers: getdeps vet fmt lint cyclo deadcode
-verifiers: vet fmt lint cyclo deadcode spelling
+verifiers: getdeps vet fmt lint staticcheck spelling
 
 vet:
-	@echo "Running $@:"
-	@GO15VENDOREXPERIMENT=1 go tool vet -all *.go
-	@GO15VENDOREXPERIMENT=1 go tool vet -shadow=true *.go
-
-spelling:
-	@GO15VENDOREXPERIMENT=1 ${GOPATH}/bin/misspell *.go
+	@echo "Running $@"
+	@GO111MODULE=on go vet github.com/minio/minl/...
 
 fmt:
-	@echo "Running $@:"
-	@GO15VENDOREXPERIMENT=1 gofmt -s -l *.go
+	@echo "Running $@"
+	@GO111MODULE=on gofmt -d github.com/minio/minl/...
 
 lint:
-	@echo "Running $@:"
-	@GO15VENDOREXPERIMENT=1 $(GOPATH)/bin/golint .
+	@echo "Running $@"
+	@GO111MODULE=on ${GOPATH}/bin/golint -set_exit_status github.com/minio/minl/...
 
-cyclo:
-	@echo "Running $@:"
-	@GO15VENDOREXPERIMENT=1 $(GOPATH)/bin/gocyclo -over 40 *.go
+staticcheck:
+	@echo "Running $@"
+	@GO111MODULE=on ${GOPATH}/bin/staticcheck github.com/minio/minl/...
 
-deadcode:
-	@echo "Running $@:"
-	@GO15VENDOREXPERIMENT=1 $(GOPATH)/bin/deadcode
+spelling:
+	@GO111MODULE=on ${GOPATH}/bin/misspell -locale US -error `find .`
 
-build: getdeps verifiers
-	@echo "Installing minl:"
+# Builds minio, runs the verifiers then runs the tests.
+check: test
+test: verifiers build
+	@echo "Running unit tests"
+	@GO111MODULE=on go test ./... 1>/dev/null
 
-test: getdeps verifiers
-	@echo "Running all testing:"
-	@GO15VENDOREXPERIMENT=1 go test $(GOFLAGS) ./
+# Builds minio locally.
+build: checks
+	@echo "Building minl binary to './minl'"
+	@GO111MODULE=on GOFLAGS="" go build --ldflags $(BUILD_LDFLAGS) -o $(PWD)/minl 1>/dev/null
 
-gomake-all: build
-	@GO15VENDOREXPERIMENT=1 go build --ldflags "$(LDFLAGS)" -o $(GOPATH)/bin/minl
-	@mkdir -p $(HOME)/.minl
-
-coverage:
-	@GO15VENDOREXPERIMENT=1 go test -race -coverprofile=cover.out ./
-	@go tool cover -html=cover.out && echo "Visit your browser"
-
-
-pkg-validate-arg-%: ;
-ifndef PKG
-	$(error Usage: make $(@:pkg-validate-arg-%=pkg-%) PKG=pkg_name)
-endif
-
-pkg-add: pkg-validate-arg-add
-	@GO15VENDOREXPERIMENT=1 $(GOPATH)/bin/govendor add $(PKG)
-
-pkg-update: pkg-validate-arg-update
-	@GO15VENDOREXPERIMENT=1 $(GOPATH)/bin/govendor update $(PKG)
-
-pkg-remove: pkg-validate-arg-remove
-	@GO15VENDOREXPERIMENT=1 $(GOPATH)/bin/govendor remove $(PKG)
-
-pkg-list:
-	@GO15VENDOREXPERIMENT=1 $(GOPATH)/bin/govendor list
-
-install: gomake-all
-
-all-tests: test
-	# TODO disable them for now.
-	#@./tests/test-minio.sh
-
-release: verifiers
-	@MINL_RELEASE=RELEASE GO15VENDOREXPERIMENT=1 ./buildscripts/build.sh
-
-experimental: verifiers
-	@MINL_RELEASE=EXPERIMENTAL GO15VENDOREXPERIMENT=1 ./buildscripts/build.sh
+# Builds minio and installs it to $GOPATH/bin.
+install: build
+	@echo "Installing minl binary to '$(GOPATH)/bin/minl'"
+	@mkdir -p $(GOPATH)/bin && cp -f $(PWD)/minl $(GOPATH)/bin/minl
+	@echo "Installation successful. To learn more, try \"minl --help\"."
 
 clean:
-	@rm -f cover.out
-	@rm -f minl
+	@echo "Cleaning up all the generated files"
 	@find . -name '*.test' | xargs rm -fv
-	@rm -fr release
+	@find . -name '*~' | xargs rm -fv
+	@rm -rvf minl
+	@rm -rvf build
+	@rm -rvf release
